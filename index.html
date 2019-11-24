@@ -53,8 +53,8 @@
 			{
 			var templateText = document.getElementById('tableTemplate').innerHTML;
 			var compiledTemplateText = Handlebars.compile(templateText);
-			compiledHTML = compiledTemplateText({ rows: major_students })
-			document.getElementById('majorTable').innerHTML = compiledHTML;
+			compiledHtml = compiledTemplateText({ rows: major_students })
+			document.getElementById('majorTable').innerHTML = compiledHtml;
 			}
 			else
 			{
