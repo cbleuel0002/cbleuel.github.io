@@ -1,16 +1,32 @@
-<!DOCTYPE html>
-	<html><head> <meta charset="UTF-8">  <title>Program 5</title>
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
+<!DOCTYPE html><html>
+	<head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Students by Major</title>
+	
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	
+		<style> .btn{margin: 5px} </style>
 	</head>
+
 	<body>
-		<div id="majorTable"></div>
+		<div class="container">
+			<h2>Select a Major</h2>
+			<div style='padding: 5px;'>
+				<button type='button' class="btn btn-primary" onClick="getData('citMajor')">CIT Majors</button>
+				<button type='button' class="btn btn-primary" onClick="getData('busMajor')">Business Majors</button>
+			</div>
+		
+			<h3>We filter our dataset by maor</h3>
+			<div id="majorTable"></div>
+		</div>
 	</body>
- 
+
 	<script type="text/x-handlebars-template" id="tableTemplate">
-		<table cellspacing='12'>
+		<table class="table table-striped">
 			<tr><th>Name</th><th>Major</th><th>Midterm</th><th>Final</th></tr>
-				{{#each rows}}
+				{{#each row}}
 					<tr>
 						<td>{{name}}</td><td>{{major}}</td><td>{{midterm}}</td><td>{{final}}</td>
 					</tr>
@@ -19,26 +35,33 @@
 	</script>
 	
 	<script>
+	
+	function getData(selected_major)
+	{
 		var request = new XMLHttpRequest();
-		var url = "cit5students.json";
-		request.open('GET', url);
-		
+		request.open('GET', 'cit5students.json');
+	
 		request.onload = function()
 		{
 			var data = JSON.parse(request.responseText);
-			if (request.statatus == 200)
+			major_students = data.filter(getMajor)
+			function getMajor(student)
+			{
+				return student.major == selected_major;
+			}
+			if (request.status == 200)
 			{
 			var templateText = document.getElementById('tableTemplate').innerHTML;
 			var compiledTemplateText = Handlebars.compile(templateText);
-			compiledHtml = compiledTemplateText({ rows: data })
-			document.getElementById('majorTable').innerHTML = compiledHtml;
+			compiledHTML = compiledTemplateText({ rows: major_students })
+			document.getElementById('majorTable').innerHTML = compiledHTML;
 			}
 			else
 			{
-			document.querySelector('#majorTable').innerHTML = "There was an error, or data not found";
+			document.querySelector('#majorTable').innerHTML = "There was an error";
 			}
 		}
-		
 		request.send(null);
+	}
 	</script>
-	</html>
+</html>
