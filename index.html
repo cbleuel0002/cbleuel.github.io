@@ -44,7 +44,7 @@
          var data = JSON.parse(request.responseText);
 
          majors = data.filter(getMajor)
-         function getMajor(students) {
+         function getMajor(item) {
             return students.majors == selected_major;
          }
         
