@@ -45,7 +45,7 @@
 
          majors = data.filter(getMajor)
          function getMajor(item) {
-            return students.majors == selected_major;
+            return item.majors == selected_major;
          }
         
         if (request.status == 200) {
