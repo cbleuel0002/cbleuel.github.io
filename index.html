@@ -43,7 +43,7 @@
       request.onload = function() {
          var data = JSON.parse(request.responseText);
 
-         majors = data.filter(getMajor)
+         major_items = data.filter(getMajor)
          function getMajor(item) {
             return item.majors == selected_major;
          }
@@ -51,7 +51,7 @@
         if (request.status == 200) {
             var templateText = document.getElementById('tableTemplate').innerHTML;
             var compiledTemplateText = Handlebars.compile(templateText);       
-            compiledHtml = compiledTemplateText({ rows: majors })          
+            compiledHtml = compiledTemplateText({ rows: major_items })          
             document.getElementById('majorTable').innerHTML = compiledHtml; 
         }
         else {
