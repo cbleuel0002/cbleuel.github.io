@@ -48,12 +48,17 @@
 			{
 				return student.major == selected_major;
 			}
-
+			if (request.status == 200)
+			{
 				var templateText = document.getElementById('tableTemplate').innerHTML;
 				var compiledTemplateText = Handlebars.compile(templateText);
 				compiledHtml = compiledTemplateText({ rows: major_students })
 				document.getElementById('majorTable').innerHTML = compiledHtml;
-			
+			}
+			else
+			{
+				document.querySelector('#majorTable').innerHTML = "There was an error";
+			}
 		}
 		request.send(null);
 	}
